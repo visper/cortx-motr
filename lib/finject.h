@@ -32,6 +32,7 @@
 #include "lib/types.h"
 #include "lib/assert.h"   /* M0_PRE */
 
+extern bool exit_error;
 /**
  * @defgroup finject Fault Injection
  *

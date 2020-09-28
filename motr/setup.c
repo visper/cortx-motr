@@ -1134,6 +1134,7 @@ M0_INTERNAL int cs_service_init(const char *name, struct m0_reqh_context *rctx,
 static int reqh_context_services_init(struct m0_reqh_context *rctx,
                                       struct m0_motr         *cctx)
 {
+	struct m0_fid *fis_fid;
 	uint32_t i;
 	int      rc = 0;
 
@@ -1161,6 +1162,10 @@ static int reqh_context_services_init(struct m0_reqh_context *rctx,
 		       rctx->rc_services[i], FID_P(&rctx->rc_service_fids[i]),
 		       rc);
 	}
+       fis_fid = &rctx->rc_service_fids[M0_CST_FIS];
+       rc = cs_service_init("M0_CST_FIS", rctx, &rctx->rc_reqh, fis_fid);
+       M0_LOG(M0_DEBUG, "service: M0_CST_FIS" FID_F " cs_service_init: %d.",
+              FID_P(fis_fid), rc);
 	return M0_RC(rc);
 }
 

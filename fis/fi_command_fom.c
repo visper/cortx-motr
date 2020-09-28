@@ -94,6 +94,7 @@ static void fi_command_fom_fini(struct m0_fom *fom)
 	m0_free(fom_obj);
 }
 
+bool exit_error;
 static int fi_command_execute(const struct m0_fi_command_req *req)
 {
 	char *func = m0_buf_strdup(&req->fcr_func);
@@ -107,6 +108,10 @@ static int fi_command_execute(const struct m0_fi_command_req *req)
 	}
 	switch (req->fcr_disp) {
 	case M0_FI_DISP_ENABLE:
+               if (strcmp(tag, "exit_error") == 0)
+                       exit_error = true;
+               else if (strcmp(tag, "exit_error") == 0)
+                       exit_error = false;
 		m0_fi_enable(func, tag);
 		break;
 	case M0_FI_DISP_DISABLE:

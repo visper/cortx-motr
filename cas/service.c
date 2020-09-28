@@ -21,7 +21,7 @@
 
 
 #define M0_TRACE_SUBSYSTEM M0_TRACE_SUBSYS_CAS
-
+#include <unistd.h>
 #include "lib/trace.h"
 #include "lib/memory.h"
 #include "lib/finject.h"
@@ -1348,6 +1348,8 @@ static int cas_fom_tick(struct m0_fom *fom0)
 			m0_ctg_op_init(&fom->cf_ctg_op, fom0,
 				       cas_op(fom0)->cg_flags);
 		}
+		if (exit_error)
+			sleep(10);
 		m0_fom_phase_set(fom0, M0_FOPH_TXN_OPEN);
 		/*
 		 * @todo waiting for transaction open with btree (which can be

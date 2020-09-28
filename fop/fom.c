@@ -23,6 +23,7 @@
 #define M0_TRACE_SUBSYSTEM M0_TRACE_SUBSYS_FOP
 #include "lib/trace.h"
 
+#include "lib/finject.h"
 #include "lib/misc.h"
 #include "lib/errno.h"
 #include "lib/assert.h"
@@ -363,6 +364,10 @@ static bool hung_fom_notify(const struct m0_fom *fom)
 	struct m0_rpc_conn    *conn      = NULL;
 	struct m0_rpc_machine *rpc_mc    = NULL;
 
+#ifndef __KERNEL__
+	if (exit_error)
+		exit(1);
+#endif
 	if (M0_IN(fom->fo_type->ft_id, (M0_BE_TX_GROUP_OPCODE,
 					M0_ADDB_FOP_OPCODE,
 					M0_HA_LINK_OUTGOING_OPCODE,
